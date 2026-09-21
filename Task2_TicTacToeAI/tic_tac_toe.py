@@ -1,7 +1,5 @@
 # CODSOFT AI Internship
-# Task 2: Tic-Tac-Toe AI
-
-import random
+# Task 2: Tic-Tac-Toe AI using Minimax
 
 def print_board(board):
     print()
@@ -33,15 +31,59 @@ def check_winner(board, player):
 
 
 def is_board_full(board):
-    return all(position != " " for position in board)
+    return " " not in board
+
+
+def minimax(board, is_maximizing):
+    if check_winner(board, "O"):
+        return 1
+
+    if check_winner(board, "X"):
+        return -1
+
+    if is_board_full(board):
+        return 0
+
+    if is_maximizing:
+        best_score = -1000
+
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "O"
+                score = minimax(board, False)
+                board[i] = " "
+                best_score = max(best_score, score)
+
+        return best_score
+
+    else:
+        best_score = 1000
+
+        for i in range(9):
+            if board[i] == " ":
+                board[i] = "X"
+                score = minimax(board, True)
+                board[i] = " "
+                best_score = min(best_score, score)
+
+        return best_score
 
 
 def computer_move(board):
-    available_moves = [
-        index for index in range(9) if board[index] == " "
-    ]
+    best_score = -1000
+    best_move = None
 
-    return random.choice(available_moves)
+    for i in range(9):
+        if board[i] == " ":
+            board[i] = "O"
+            score = minimax(board, False)
+            board[i] = " "
+
+            if score > best_score:
+                best_score = score
+                best_move = i
+
+    return best_move
 
 
 def play_game():
@@ -52,12 +94,12 @@ def play_game():
     print("================================")
     print("You are X")
     print("Computer is O")
+    print("Computer uses Minimax AI.")
     print("Choose a position from 1 to 9.")
-    
+
     print_board([str(i) for i in range(1, 10)])
 
     while True:
-        # Player move
         try:
             move = int(input("Enter your position (1-9): ")) - 1
 
@@ -85,7 +127,6 @@ def play_game():
             print("It's a draw!")
             break
 
-        # Computer move
         move = computer_move(board)
         board[move] = "O"
 
