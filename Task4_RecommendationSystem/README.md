@@ -39,6 +39,6 @@ Recommended Movies:
 - Interstellar
 - Avengers
 - Jurassic Park
-Phir **Commit changes** kar do. ✅
+## Author
 
-Uske baad hum **final check** karenge ki Task 1, Task 2 aur Task 4 teeno folders sahi jagah hain.
+Rishika Parmar
